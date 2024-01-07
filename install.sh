@@ -10,7 +10,8 @@
 
 set -u
 
-GOUP_UPDATE_ROOT="${GOUP_UPDATE_ROOT:-https://github.com/pemako/goup/releases/latest/download}"
+latest=v0.7.1
+GOUP_UPDATE_ROOT="${GOUP_UPDATE_ROOT:-https://github.com/pemako/goup/releases/download/${latest}/}"
 
 
 main() {
@@ -22,19 +23,16 @@ main() {
   get_architecture || return 1
   local _arch="$RETVAL"
 
-  local _ext=""
-  case "$_arch" in
-    *windows*)
-      _ext=".exe"
-      ;;
-  esac
-
-  local _url="${GOUP_UPDATE_ROOT}/${_arch}${_ext}"
-  local _dir="$HOME/.go/bin"
+  local _ext="goup-${latest}-${_arch}.tar.gz"
+  local _url="${GOUP_UPDATE_ROOT}/${_ext}"
+  local _dir="$HOME/.go2/bin"
   local _file="${_dir}/goup${_ext}"
 
   ensure mkdir -p "$_dir"
   ensure downloader "$_url" "$_file"
+  ensure _tar "$_file" "$_dir"
+  ensure rm "$_file"
+  _file="${_dir}/goup"
   ensure chmod u+x "$_file"
   if [ ! -x "$_file" ]; then
     printf '%s\n' "Cannot execute $_file." 1>&2
@@ -122,6 +120,10 @@ downloader() {
   else
     err "Unknown downloader"   # should not reach here
   fi
+}
+
+_tar() {
+  tar -zxf "$1" -C $2
 }
 
 get_architecture() {
