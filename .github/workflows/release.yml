@@ -36,4 +36,6 @@ jobs:
           ldflags: -X "github.com/pemako/goup/internal/commands.Version=${{ env.RELEASE_TAG }}" 
           project_path: ./cmd/goup
           #extra_files: doc examples install CHANGELOG.md CITATION.cff CONTRIBUTING.md LICENSE README.md
-          asset_name: '${{ env.REPOSITORY_NAME }}-${{ env.RELEASE_TAG }}-${{ env.OS_NAME }}-${{ matrix.goarch }}'
+          #asset_name: '${{ env.REPOSITORY_NAME }}-${{ env.RELEASE_TAG }}-${{ env.OS_NAME }}-${{ matrix.goarch }}'
+          asset_name: '${{ env.OS_NAME }}-${{ matrix.goarch }}'
+          compress_assets: OFF
