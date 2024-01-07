@@ -23,6 +23,12 @@ main() {
   local _arch="$RETVAL"
 
   local _ext=""
+  case "$_arch" in
+    *windows*)
+      _ext=".exe"
+      ;;
+  esac
+
   local _url="${GOUP_UPDATE_ROOT}/${_arch}${_ext}"
   local _dir="$HOME/.go/bin"
   local _file="${_dir}/goup${_ext}"
