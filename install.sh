@@ -25,7 +25,7 @@ main() {
 
   local _ext="goup-${latest}-${_arch}.tar.gz"
   local _url="${GOUP_UPDATE_ROOT}/${_ext}"
-  local _dir="$HOME/.go2/bin"
+  local _dir="$HOME/.go/bin"
   local _file="${_dir}/goup${_ext}"
 
   ensure mkdir -p "$_dir"
