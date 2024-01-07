@@ -10,7 +10,7 @@
 
 set -u
 
-GOUP_UPDATE_ROOT="${GOUP_UPDATE_ROOT:-https://github.com/pemako/goup/releases/download/latest/}"
+GOUP_UPDATE_ROOT="${GOUP_UPDATE_ROOT:-https://github.com/pemako/goup/releases/latest/download}"
 
 
 main() {
