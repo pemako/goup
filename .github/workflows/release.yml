@@ -1,0 +1,39 @@
+name: Release
+on:
+  release:
+    types: [published]
+
+jobs:
+  releases-matrix:
+    name: Release Go Binaries
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goos: [linux, windows, darwin, freebsd]
+        goarch: [amd64, arm64]
+        exclude:
+          - goos: windows
+            goarch: arm64
+
+    steps:
+      - name: Get Release Info
+        run: |
+          {
+            echo "RELEASE_TAG=${GITHUB_REF/refs\/tags\//}"
+            echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#*/}"
+            echo "OS_NAME=${{ matrix.goos }}"
+          } >> "$GITHUB_ENV"
+      #- name: OS darwin
+      #  if: matrix.goos == 'darwin'
+      #  run: echo "OS_NAME=macOS" >> "$GITHUB_ENV"
+      - uses: actions/checkout@v3
+      - uses: wangyoucao577/go-release-action@v1.40
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          md5sum: false
+          goos: ${{ matrix.goos }}
+          goarch: ${{ matrix.goarch }}
+          ldflags: -X "github.com/pemako/goup/internal/commands.Version=${{ env.RELEASE_TAG }}" 
+          project_path: ./cmd/goup
+          #extra_files: doc examples install CHANGELOG.md CITATION.cff CONTRIBUTING.md LICENSE README.md
+          asset_name: '${{ env.REPOSITORY_NAME }}-${{ env.RELEASE_TAG }}-${{ env.OS_NAME }}-${{ matrix.goarch }}'
