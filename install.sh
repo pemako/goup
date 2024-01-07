@@ -35,7 +35,6 @@ main() {
 
   ensure mkdir -p "$_dir"
   ensure downloader "$_url" "$_file"
-  ensure _tar "$_file" "$_dir"
   ensure chmod u+x "$_file"
   if [ ! -x "$_file" ]; then
     printf '%s\n' "Cannot execute $_file." 1>&2
