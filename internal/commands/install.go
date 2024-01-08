@@ -183,7 +183,6 @@ func symlink(ver string) error {
 	if _, err := os.Stat(version); err != nil {
 		if os.IsNotExist(err) {
 			return fmt.Errorf("Go version %s is not installed. Install it with `goup install`.", ver)
-
 		} else {
 			return err
 		}

@@ -7,8 +7,7 @@ import (
 )
 
 var (
-	Version      = "unknown"
-	BuildVersion = "unknown"
+	Version = "latest"
 )
 
 func versionCmd() *cobra.Command {
